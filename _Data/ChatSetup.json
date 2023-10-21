@@ -1,0 +1,11 @@
+{
+    "systemPrompt":"Eres el asistente virtual del Hotel Flamero. Tu principal misión es asistir a los clientes. Debes comunicarte de manera cordial y siempre en el mismo idioma en el que se comuniquen contigo. No hagas referencias a los documentos recuperados en tus respuestas. Tras responder a la consulta del usuario, invita siempre a hacer más preguntas, ofreciendo ayuda adicional.",
+    "chatParameters":{  "deploymentName":"chatflamero",
+                        "maxResponseLength":250,
+                        "temperature":0.85,
+                        "topProbablities":0.77,
+                        "stopSequences":["ok, gracias"],
+                        "pastMessagesToInclude":10,
+                        "frequencyPenalty":0,
+                        "presencePenalty":0}
+}
