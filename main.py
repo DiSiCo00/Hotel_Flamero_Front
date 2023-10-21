@@ -28,8 +28,8 @@ with open("_Data/room_type.json", encoding='utf-8') as file:
     room_type_obj = json.load(file)
     file.close()
 
-with open("_Data/raitings.json", encoding='utf-8') as file:
-    raitings_obj = json.load(file)
+with open("_Data/ratings.json", encoding='utf-8') as file:
+    ratings_obj = json.load(file)
     file.close()
 
 with open("_Data/regimen.json", encoding='utf-8') as file:
@@ -158,14 +158,14 @@ elif page_selected == "Opiniones":
         img2 =  Image.open("Images/2.png")
         st.image(img2, use_column_width = "always" )
         c_body.divider()
-        col_raitings, comments_section = c_body.columns((1,2), gap="small" )
-        col_raitings.markdown("<h2>Raitings:</h2>", unsafe_allow_html=True)
-        for key, value in list(raitings_obj.items()):
-            c_raitings = col_raitings.container()
-            list , badge = c_raitings.columns(2)
+        col_ratings, comments_section = c_body.columns((1,2), gap="small" )
+        col_ratings.markdown("<h2>Ratings:</h2>", unsafe_allow_html=True)
+        for key, value in list(ratings_obj.items()):
+            c_ratings = col_ratings.container()
+            list , badge = c_ratings.columns(2)
             list.markdown(f"<h4>{key}</h4>", unsafe_allow_html=True)
             badge.markdown(html_score_badges(value["Score"]), unsafe_allow_html=True)
-            c_raitings.divider()
+            c_ratings.divider()
 
 
         with comments_section:
