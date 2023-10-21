@@ -74,7 +74,10 @@ if page_selected == "Flamero":
 
     with st.form("booking_info"):
         c_body.markdown('<h3>Compruebe disponibilidad:</h3>', unsafe_allow_html=True)
+        fecha_venta = pd.to_datetime(c_body.date_input(label = "Qué día es hoy? (Funcionalidad disponible solo para tests para cambiar el día de la reserva):",
 
+                max_value=pd.to_datetime('30/9/2024',dayfirst=True),
+                on_change=None, format="DD/MM/YYYY"), dayfirst=True)
 
         entry_date = pd.to_datetime(c_body.date_input(label = "Seleccione la fecha de entrada (Las fechas están acotadas para los días disponibles):",
                 value = pd.to_datetime('1/6/2024', dayfirst=True),
