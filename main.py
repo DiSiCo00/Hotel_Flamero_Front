@@ -95,7 +95,7 @@ if page_selected == "Flamero":
 
         child = int(col_3.number_input('Cantidad de niños:',min_value=0))
 
-        if col_3.checkbox("Necesita cunas en la habitacion?", disabled=bool(not child)):
+        if col_3.checkbox("Necesita cunas en la habitacion?"):
             cunas = int(col_3.number_input('Cuantas?:',min_value=1))
         else:
             cunas = 0
