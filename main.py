@@ -90,7 +90,7 @@ if page_selected == "Reserva":
                 max_value=entry_date,
                 on_change=None, format="DD/MM/YYYY"), dayfirst=True)
         
-        col_1, col_2, col_3, col_4 = c_body.columns(4)
+        col_1, col_2, col_3, col_4, col_5 = c_body.columns(5)
 
         noches = int(col_1.number_input('Seleccione la cantidad de noches:',min_value=1))
 
@@ -114,7 +114,7 @@ if page_selected == "Reserva":
         
         room_type = room_type_obj[room_type_id_pointer]["ID"]
 
-        regimen_pointer = col_4.radio('Seleccione el tipo de pensión que desea:',
+        regimen_pointer = col_5.radio('Seleccione el tipo de pensión que desea:',
                 list(regimen.keys()))
         
         pension = regimen[regimen_pointer]
