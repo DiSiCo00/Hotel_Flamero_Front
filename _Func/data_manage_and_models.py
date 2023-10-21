@@ -176,14 +176,14 @@ def func_no_reembolso(cancel_prob, score, _cuota_media=0.10, _cuota_maxima=0.25,
                       st.write(f"Riesgo alto de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_maxima)*100:.1f}% del Precio total hasta 30 días antes del {_obj['Fecha entrada']}")
                     else:
                       st.write(f"Riesgo alto de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_maxima)*100:.1f}% del Precio total hasta 7 días antes del {_obj['Fecha entrada']}")
-                  return _cuota_maxima
+                    return _cuota_maxima
                   else:
                     if score<0.5:
                       st.write(f"¡¡Aviso de posible cancelación tardía!!")
                       st.write(f"Riesgo moderado de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_media)*100:.1f}% del Precio total hasta 14 días antes del {_obj['Fecha entrada']}")
                     else:
                       st.write(f"Riesgo moderado de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_media)*100:.1f}% del Precio total hasta 48 horas antes del {_obj['Fecha entrada']}")
-                  return _cuota_media
+                    return _cuota_media
                 else:
                   raise ValueError("El valor de ´umbral_superior´  tiene que ser mayor que ´umbral_inferior´.")
               else:
