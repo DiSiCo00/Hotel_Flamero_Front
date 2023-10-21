@@ -90,7 +90,7 @@ if page_selected == "Reserva":
                 max_value=entry_date,
                 on_change=None, format="DD/MM/YYYY"), dayfirst=True)
         
-        col_1, col_2, col_3 = c_body.columns(3)
+        col_1, col_2, col_3, col_4 = c_body.columns(4)
 
         noches = int(col_1.number_input('Seleccione la cantidad de noches:',min_value=1))
 
@@ -104,11 +104,11 @@ if page_selected == "Reserva":
             cunas = 0
 
         if child==0:
-            room_type_id_pointer = col_1.radio('Seleccione un tipo de habitacion que desea:',
+            room_type_id_pointer = col_4.radio('Seleccione un tipo de habitacion que desea:',
                              ['DOBLE SUPERIOR COTO', 'DOBLE SUPERIOR MAR', 'DELUXE VISTA COTO', 'DELUXE VISTA MAR', 
                                'ESTUDIO COTO', 'ESTUDIO MAR', 'SUITE', 'APARTAMENTO PREMIUM', 'INDIVIDUAL'])
         else:
-           room_type_id_pointer = col_1.radio('Seleccione un tipo de habitacion que desea:',
+           room_type_id_pointer = col_4.radio('Seleccione un tipo de habitacion que desea:',
                             ['DOBLE SUPERIOR COTO', 'DOBLE SUPERIOR MAR', 'DELUXE VISTA COTO', 'ESTUDIO COTO', 
                              'ESTUDIO MAR', 'SUITE', 'APARTAMENTO PREMIUM'])
         
