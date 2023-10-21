@@ -152,7 +152,7 @@ def predict_date_score(X, _obj, fecha_venta):
     return _score
 
 #Función cuota no reembolsable
-def func_no_reembolso(_obj, cancel_prob, score, _cuota_media=0.10, _cuota_maxima=0.25, _umbral_inferior=0.25, _umbral_superior=0.4 ):
+def func_no_reembolso(fecha_entrada, cancel_prob, score, _cuota_media=0.10, _cuota_maxima=0.25, _umbral_inferior=0.25, _umbral_superior=0.4 ):
         #Condiciones de control
         if 0 <= _cuota_maxima <= 1:
           if 0 <= _cuota_media <= 1:
