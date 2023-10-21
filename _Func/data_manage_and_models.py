@@ -206,7 +206,7 @@ def predictions(room_type, noches, adultos, child, cunas, fecha_entrada, fecha_v
     cancel_prob = predict_prob(X_booking)
     score = predict_date_score(X_cancel, obj, fecha_venta)
 
-    cuota =  func_no_reembolso(fecha_entrada, ancel_prob, score)
+    cuota =  func_no_reembolso(fecha_entrada, cancel_prob, score)
 
     return obj, cancel_prob, score, cuota
 
