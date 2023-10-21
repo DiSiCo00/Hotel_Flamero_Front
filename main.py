@@ -60,12 +60,12 @@ c_body = c_main.container()
 with st.sidebar:
     page_selected = option_menu(
     menu_title="Menu",
-    options=["Flamero", "Opiniones", "ChatBot"],
+    options=["Reserva", "Opiniones", "ChatBot"],
     default_index=0,
     )
 
 
-if page_selected == "Flamero":
+if page_selected == "Reserva":
     
     img =  Image.open("Images/1.png")
     c_body.image(img, use_column_width = "always" )
