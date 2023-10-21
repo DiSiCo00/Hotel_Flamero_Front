@@ -114,7 +114,7 @@ if page_selected == "Reserva":
         
         room_type = room_type_obj[room_type_id_pointer]["ID"]
 
-        regimen_pointer = col_2.radio('Seleccione el tipo de pensión que desea:',
+        regimen_pointer = col_4.radio('Seleccione el tipo de pensión que desea:',
                 list(regimen.keys()))
         
         pension = regimen[regimen_pointer]
