@@ -169,7 +169,7 @@ def func_no_reembolso(cancel_prob, score, _cuota_media=0.10, _cuota_maxima=0.25,
                       st.write(f"Riesgo bajo de cancelación.\nEl huésped podrá cancelar sin coste hasta 7 días antes del {_obj['Fecha entrada']}")
                     else:
                       st.write(f"Riesgo bajo de cancelación.\nEl huésped podrá cancelar sin coste hasta 24 horas antes del {_obj['Fecha entrada']}")
-                  return 0
+                    return 0;
                   elif cancel_prob > _umbral_superior:
                     if score<0.5:
                       st.write(f"¡¡Aviso de posible cancelación tardía!!")
