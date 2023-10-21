@@ -27,7 +27,7 @@ def load_cancel_data():
 
 def load_booking_data():
     #Leemos el csv reservas_total_preprocesado para recuperar el dataframe
-    reservas_total=pd.read_csv('_Data/reserva_preprocesado.csv')
+    reservas_total=pd.read_csv('_Data/reservas_total_preprocesado.csv')
 
     # Convertimos las columnas en formato de fecha
     reservas_total['Fecha entrada'] = pd.to_datetime(reservas_total['Fecha entrada'], dayfirst=True, format = "mixed")
@@ -98,18 +98,18 @@ def new_Booking(df, room_type, noches, adultos, child, cunas, fecha_entrada, fec
 
 
     obj = {
-    "Noches": noches,
-    "Tip_Hab_Fra" : room_type,
-    "R_Factura": regimen,
-    "AD": adultos,
-    "NI":child,
-    "CU":cunas,
+    'Noches': noches,
+    'Tip_Hab_Fra' : room_type,
+    'R_Factura': regimen,
+    'AD': adultos,
+    'NI':child,
+    'CU':cunas,
     'Horario_Venta': get_horario(),
     'P_Alojamiento': precio_alojamiento,
     'P_Desayuno': precio_desayuno,
     'P_Almuerzo': precio_almuerzo,
     'P_Cena': precio_cena,
-    "Cantidad_Habitaciones": habitaciones(adultos,child,room_type),
+    'Cantidad_Habitaciones': habitaciones(adultos,child,room_type),
     'Mes_Entrada' : fecha_entrada.strftime('%B'),
     'Mes_Venta': fecha_venta.strftime('%B'),
     'Antelacion': (fecha_entrada-fecha_venta).days
@@ -141,35 +141,59 @@ def new_data_to_model(df, _obj, _use_cols = use_cols):
 
 
 #Funci�n para predercir la probabilidad de cancelaci�n de una reserva con un modelo determinado
-def predict_cancel_prob(X):
-    model = joblib.load("cls_random_forest.pkl")
+def predict_prob(X):
+    model = joblib.load("random_forest.pkl")
     return model.predict_proba(X[-1].reshape(1, -1))[0,1]
 
-    #Predecimos la probabilidad de cancelaci�n de la nueva reserva
-
 #Fecha maxima para cancelar
-def cancel_date(X, _obj, fecha_venta):
+def predict_date_score(X, _obj, fecha_venta):
     model = joblib.load("reg_random_forest.pkl")
 
     _score = model.predict(X[-1].reshape(1, -1))
-    # pred=predict_model(model,obj)
-    _days = (1 - float(_score))*_obj["Antelacion"]
 
+    return _score[0]
 
-    # Sumar d�as a la fecha actual
-    _cancel_date = fecha_venta + timedelta(_days)
-    _cancel_date = _cancel_date.strftime("%d/%m/%Y")
+#Función cuota no reembolsable
+def func_no_reembolso(cancel_prob, score, _cuota_media=0.10, _cuota_maxima=0.25, _umbral_inferior=0.25, _umbral_superior=0.4, ):
+        #Condiciones de control
+        if 0 <= _cuota_maxima <= 1:
+          if 0 <= _cuota_media <= 1:
+            if 0 <= _umbral_inferior <= 1:
+              if 0 <= _umbral_superior <= 1:
+                if _umbral_superior >_umbral_inferior:
 
-    return _cancel_date, _score[0]
-
-def fix_cuote(_cancel_prob, _score):
-    if _cancel_prob <= 0.25:
-        return 0
-    elif _cancel_prob > 0.60:
-        return 0.5
-    else:
-        return _score*0.5*_cancel_prob
-
+                  #Según los distintos umbrales y dependiendo del score, las cancelaciones tendrán unas cuotas y fechas de cancelación 
+                  if cancel_prob < _umbral_inferior:
+                    if score<0.5:
+                      st.write(f"¡¡Aviso de posible cancelación tardía!!")
+                      st.write(f"Riesgo bajo de cancelación.\nEl huésped podrá cancelar sin coste hasta 7 días antes del {_obj['Fecha entrada']}")
+                    else:
+                      st.write(f"Riesgo bajo de cancelación.\nEl huésped podrá cancelar sin coste hasta 24 horas antes del {_obj['Fecha entrada']}")
+                  return 0
+                  elif cancel_prob > _umbral_superior:
+                    if score<0.5:
+                      st.write(f"¡¡Aviso de posible cancelación tardía!!")
+                      st.write(f"Riesgo alto de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_maxima)*100:.1f}% del Precio total hasta 30 días antes del {_obj['Fecha entrada']}")
+                    else:
+                      st.write(f"Riesgo alto de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_maxima)*100:.1f}% del Precio total hasta 7 días antes del {_obj['Fecha entrada']}")
+                  return _cuota_maxima
+                  else:
+                    if score<0.5:
+                      st.write(f"¡¡Aviso de posible cancelación tardía!!")
+                      st.write(f"Riesgo moderado de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_media)*100:.1f}% del Precio total hasta 14 días antes del {_obj['Fecha entrada']}")
+                    else:
+                      st.write(f"Riesgo moderado de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_media)*100:.1f}% del Precio total hasta 48 horas antes del {_obj['Fecha entrada']}")
+                  return _cuota_media
+                else:
+                  raise ValueError("El valor de ´umbral_superior´  tiene que ser mayor que ´umbral_inferior´.")
+              else:
+                raise ValueError("El valor ´umbral_superior´ debe estar entre 0 y 1.")
+            else:
+              raise ValueError("El valor ´umbral_inferior´ debe estar entre 0 y 1.")
+          else:
+            raise ValueError("El valor ´cuota_media´ debe estar entre 0 y 1.")
+        else:
+          raise ValueError("El valor ´cuota_maxima´ debe estar entre 0 y 1.")
 
 
 def predictions(room_type, noches, adultos, child, cunas, fecha_entrada, fecha_venta, regimen):
@@ -182,12 +206,12 @@ def predictions(room_type, noches, adultos, child, cunas, fecha_entrada, fecha_v
 
     X_cancel = new_data_to_model(cancel_data, obj)
 
-    cancel_prob = predict_cancel_prob(X_booking)
-    c_date, score = cancel_date(X_cancel, obj, fecha_venta)
+    cancel_prob = predict_prob(X_booking)
+    score = predict_date_score(X_cancel, obj, fecha_venta)
 
-    cuota = fix_cuote(cancel_prob, score)
+    cuota =  func_no_reembolso(cancel_prob, score)
 
-    return cancel_prob, c_date, cuota, obj, score
+    return obj, cancel_prob, score, cuota
 
 def stentiment_analizis(_text):
 
