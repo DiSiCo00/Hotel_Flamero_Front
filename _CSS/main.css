@@ -1,0 +1,102 @@
+/* Style the header */
+.comment_header {
+    padding: 10px 16px;
+    background: hsl(0, 0%, 100%);
+    color: #d7d8e1;
+}
+
+  /* Page content */
+.content {
+    padding: 16px;
+}
+  /* The sticky class is added to the header with JS when it reaches its scroll position */
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%
+} 
+  /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+    padding-top: 102px;
+}
+
+
+/* Chat containers */
+.comment_container {
+    border: 2px solid #9b9595;
+    background-color: #ffffff;
+    border-radius: 25px;
+    padding: 10px;
+    margin: 10px 0;
+    margin-right: 15px;
+    margin-left: 15px;
+    }
+
+/* Style time text */
+
+
+/* Clear floats */
+.comment_container::after {
+    content: "";
+    clear: both;
+    display: table;
+    }
+
+.container_comments_header {
+    display: flex;
+    }
+
+.container_comments_header img:first-child {
+    margin-right: 500px;
+    }
+
+
+/* Badges  */
+/* /* Make sure that padding behaves as expected */
+* {box-sizing:border-box}
+
+
+.badge {
+    background-color: #c66d6d;
+    color: white;
+    padding: 20px 20px;
+    text-align: center;
+    border-radius: 20px;
+    text-wrap: pretty;
+    text-anchor: middle ;
+}
+
+
+
+/* Little_Badges */
+
+/* /* Make sure that padding behaves as expected */
+* {box-sizing:border-box}
+
+
+.little_badge {
+    background-color: rgba(75, 78, 79, 0.598);
+    color: white;
+    padding: 8px 8px;
+    text-align: center;
+    border-radius: 5px;
+    text-wrap: pretty;
+    text-anchor: middle;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+
+}
+
+.comment_section {
+    background: #ecb9b9;
+    height: 350px;
+    overflow-y: scroll ;
+}
+
+
+
+
+
+
+
