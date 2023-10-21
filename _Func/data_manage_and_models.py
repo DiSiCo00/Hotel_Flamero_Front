@@ -122,8 +122,7 @@ def new_data_to_model(df, _obj, _use_cols = use_cols):
     _sample = df[_use_cols]
 
     # Agregar la nueva fila al DataFrame
-    _X =  _sample.append(obj, ignore_index = True)
-            #pd.concat([_sample, pd.DataFrame(_obj,index=[0])], ignore_index=True)
+    _X =  pd.concat([_sample, pd.DataFrame(_obj,index=[0])], ignore_index=True)
 
     #One Hot Encoding de las variables categ�ricas
     _X = pd.get_dummies(_X, columns=["Tip.Hab.Fra.", "Régimen factura","Horario venta", "Mes Entrada", "Mes Venta"], drop_first=True)
