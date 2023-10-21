@@ -146,9 +146,6 @@ if page_selected == "Flamero":
                 info_col.divider()
                 info_col.markdown(f"<h3>Precio de la estancia:</h3> €{round(obj['Precio alojamiento'], 2)}", unsafe_allow_html=True)
                 info_col.markdown(f"<h3>Probabilidad de Cancelación:</h3> {round(cancel_prob*100, 2)}%", unsafe_allow_html=True)
-                info_col.markdown(f"<h3>Pago adelantado:</h3> €{round(cuota*obj['Precio alojamiento'] , 2)}", unsafe_allow_html=True)
-                
-                info_col.markdown(f"<h3>Cancelación Gratuita Hasta:</h3> {c_date}", unsafe_allow_html=True)
                 info_col.markdown(f"<h3>Cancel_Score:</h3> {round(score, 2)}", unsafe_allow_html=True)
 
                 # Columna de Desceipcion de la Habitación
