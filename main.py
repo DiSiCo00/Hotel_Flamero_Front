@@ -103,7 +103,7 @@ if page_selected == "Flamero":
         else:
             cunas = 0
 
-        if child>0:
+        if child==0:
             room_type_id_pointer = col_1.radio('Seleccione un tipo de habitacion que desea:',
                              ['DOBLE SUPERIOR COTO', 'DOBLE SUPERIOR MAR', 'DELUXE VISTA COTO', 'DELUXE VISTA MAR', 
                                'ESTUDIO COTO', 'ESTUDIO MAR', 'SUITE', 'APARTAMENTO PREMIUM', 'INDIVIDUAL'])
