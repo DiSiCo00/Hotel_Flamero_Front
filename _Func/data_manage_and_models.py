@@ -89,10 +89,10 @@ def new_Booking(df, room_type, noches, adultos, child, cunas, fecha_entrada, fec
 
         return cont
 
-    precio_alojamiento = int(df['Precio Alojamiento'].loc[df['Tip_Hab_Fra'] == room_type].mean()/df['Noches'].loc[df['Tip_Hab_Fra'] == room_type].mean())*noches
-    precio_desayuno=df['Precio Desayuno'].loc[df['R_Factura'] == regimen[0]].mean()
-    precio_almuerzo=df['Precio Almuerzo'].loc[df['R_Factura'] == regimen[0]].mean()
-    precio_cena= df['Precio Cena'].loc[df['R_Factura'] == regimen[0]].mean()
+    precio_alojamiento = int(df['Precio alojamiento'].loc[df['Tip_Hab_Fra'] == room_type].mean()/df['Noches'].loc[df['Tip_Hab_Fra'] == room_type].mean())*noches
+    precio_desayuno=df['Precio desayuno'].loc[df['R_Factura'] == regimen[0]].mean()
+    precio_almuerzo=df['Precio almuerzo'].loc[df['R_Factura'] == regimen[0]].mean()
+    precio_cena= df['Precio cena'].loc[df['R_Factura'] == regimen[0]].mean()
 
 
     obj = {
@@ -126,11 +126,11 @@ def new_data_to_model(df, _obj, _use_cols = use_cols):
     _X =  pd.concat([_sample, pd.DataFrame(_obj,index=[0])], ignore_index=True)
 
     #One Hot Encoding de las variables categ�ricas
-    _X = pd.get_dummies(_X, columns=["Tip_Hab_Fra", "R_Factura","Horario_Venta", "Mes_Entrada", "Mes_Venta"], drop_first=True)
+    _X = pd.get_dummies(_X, columns=["Tip_Hab_Fra", "Régimen Factura","Horario_Venta", "Mes_Entrada", "Mes_Venta"], drop_first=True)
 
     #Aplicamos el escalador robusto
     robust_scaler = RobustScaler()
-    _X[["P_Alojamiento", "Antelacion"]] = robust_scaler.fit_transform(_X[["P_Alojamiento", "Antelacion"]])
+    _X[["Precio alojamiento", "Antelacion"]] = robust_scaler.fit_transform(_X[["Precio alojamiento", "Antelacion"]])
 
     # Aplicamos la normalizaci�n Min Max
     scaler = MinMaxScaler()
