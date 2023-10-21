@@ -89,8 +89,6 @@ def new_Booking(df, room_type, noches, adultos, child, cunas, fecha_entrada, fec
 
         return cont
 
-    av_regimen = df["R_Factura"].loc[df['Tip_Hab_Fra']== room_type].value_counts(normalize=True)
-    regimen = random.choices(av_regimen.index, av_regimen.values, k=1)
     precio_alojamiento = int(df['P_Alojamiento'].loc[df['Tip_Hab_Fra'] == room_type].mean()/df['Noches'].loc[df['Tip_Hab_Fra'] == room_type].mean())*noches
     precio_desayuno=df['P_Desayuno'].loc[df['R_Factura'] == regimen[0]].mean()
     precio_almuerzo=df['P_Almuerzo'].loc[df['R_Factura'] == regimen[0]].mean()
