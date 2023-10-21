@@ -76,15 +76,15 @@ if page_selected == "Flamero":
         c_body.markdown('<h3>Compruebe disponibilidad:</h3>', unsafe_allow_html=True)
 
 
-        entry_date = pd.to_datetime(c_body.date_input(label = "Seleccione la fecha deentrada (Las fechas estan acotadas para los dias disponibles):",
+        entry_date = pd.to_datetime(c_body.date_input(label = "Seleccione la fecha de entrada (Las fechas están acotadas para los días disponibles):",
                 value = pd.to_datetime('1/6/2024', dayfirst=True),
                 min_value=pd.to_datetime('1/6/2024', dayfirst=True),
                 max_value=pd.to_datetime('30/9/2024',dayfirst=True),
                 on_change=None, format="DD/MM/YYYY"), dayfirst=True)
         
-        fecha_venta = pd.to_datetime(c_body.date_input(label = "QUe dia es hoy (Funcionalidad disponible solo para la presentación para cambiar el dia de en que se reserva):",
+        fecha_venta = pd.to_datetime(c_body.date_input(label = "Qué día es hoy? (Funcionalidad disponible solo para tests para cambiar el día de la reserva):",
 
-                max_value=pd.to_datetime('30/9/2024',dayfirst=True),
+                max_value=entry_date,
                 on_change=None, format="DD/MM/YYYY"), dayfirst=True)
         
         col_1, col_2, col_3 = c_body.columns(3)
@@ -93,7 +93,7 @@ if page_selected == "Flamero":
 
         adultos = int(col_2.number_input('Cantidad de adultos:',min_value=1))
 
-        child = int(col_3.number_input('Cantidad de menores de edad:',min_value=0))
+        child = int(col_3.number_input('Cantidad de niños:',min_value=0))
 
         if col_3.checkbox("Necesita cunas en la habitacion?", disabled=bool(not child)):
             cunas = int(col_3.number_input('Cuantas?:',min_value=1))
@@ -102,15 +102,16 @@ if page_selected == "Flamero":
 
         if child>0:
             room_type_id_pointer = col_1.radio('Seleccione un tipo de habitacion que desea:',
-                            ['INDIVIDUAL','ESTUDIO COTO','ESTUDIO MAR','DOBLE SUPERIOR COTO', 'DOBLE SUPERIOR MAR',
-                            'APARTAMENTO PREMIUM','DELUXE VISTA COTO', 'DELUXE VISTA COTO', 'SUITE'])
+                             ['DOBLE SUPERIOR COTO', 'DOBLE SUPERIOR MAR', 'DELUXE VISTA COTO', 'DELUXE VISTA MAR', 
+                               'ESTUDIO COTO', 'ESTUDIO MAR', 'SUITE', 'APARTAMENTO PREMIUM', 'INDIVIDUAL'])
         else:
-            room_type_id_pointer = col_1.radio('Seleccione un tipo de habitacion que desea:',
-                            ['DOBLE SUPERIOR COTO', 'DOBLE SUPERIOR MAR', 'DELUXE VISTA COTO', 'ESTUDIO COTO', 'ESTUDIO MAR', 'SUITE'])
+           room_type_id_pointer = col_1.radio('Seleccione un tipo de habitacion que desea:',
+                            ['DOBLE SUPERIOR COTO', 'DOBLE SUPERIOR MAR', 'DELUXE VISTA COTO', 'ESTUDIO COTO', 
+                             'ESTUDIO MAR', 'SUITE', 'APARTAMENTO PREMIUM'])
         
         room_type = room_type_obj[room_type_id_pointer]["ID"]
 
-        regimen_pointer = col_2.radio('Seleccione un tipo de pensiónm que desea:',
+        regimen_pointer = col_2.radio('Seleccione el tipo de pensión que desea:',
                 list(regimen.keys()))
         
         pension = regimen[regimen_pointer]
@@ -129,9 +130,9 @@ if page_selected == "Flamero":
                 time.sleep(2)
                 msg.toast("Chequeando disponibilidad...")
                 time.sleep(2)
-                msg.toast("Estas de suerte!! Ahora buscaremos lahabitacione adecuada...")
+                msg.toast("Estás de suerte!! Ahora buscaremos la habitación adecuada...")
                 time.sleep(2)
-                cancel_prob, c_date, cuota, obj, score = predictions(room_type, noches, adultos, child, cunas, entry_date, fecha_venta, pension )
+                obj, cancel_prob, score, cuota = predictions(room_type, noches, adultos, child, cunas, entry_date, fecha_venta, pension)
 
                 st.success("Tenemos la habitación adecuada para ti", icon="✅")
             c_room_info = st.expander("Ver Habitación")
