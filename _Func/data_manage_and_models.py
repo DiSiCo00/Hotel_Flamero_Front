@@ -202,6 +202,7 @@ def predictions(room_type, noches, adultos, child, cunas, fecha_entrada, fecha_v
     X_booking = new_data_to_model(reservas, obj)
     X_cancel = new_data_to_model(cancel_data, obj)
 
+    st.write(X_booking)
     cancel_prob = predict_prob(X_booking)
     score = predict_date_score(X_cancel, obj, fecha_venta)
 
