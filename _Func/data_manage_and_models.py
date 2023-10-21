@@ -16,9 +16,9 @@ import json
 
 import joblib
 
-use_cols = ['Noches','Tip_Hab_Fra','R_Factura', 'AD', 'NI','CU','Horario_Venta',
-            'P_Alojamiento','P_Desayuno', 'P_Almuerzo', 'P_Cena',
-            'Cantidad_Habitaciones','Mes_Entrada','Mes_Venta','Antelacion']
+use_cols = ['Noches','Tip.Hab.Fra.','Régimen factura', 'AD', 'NI','CU','Horario venta',
+            'Precio alojamiento','Precio desayuno', 'Precio almuerzo', 'Precio cena',
+            'Cantidad Habitaciones','Mes Entrada','Mes Venta','Antelacion']
 
 
 def load_cancel_data():
@@ -89,27 +89,27 @@ def new_Booking(df, room_type, noches, adultos, child, cunas, fecha_entrada, fec
 
         return cont
 
-    precio_alojamiento = int(df['Precio alojamiento'].loc[df['Tip_Hab_Fra'] == room_type].mean()/df['Noches'].loc[df['Tip_Hab_Fra'] == room_type].mean())*noches
-    precio_desayuno=df['Precio desayuno'].loc[df['R_Factura'] == regimen[0]].mean()
-    precio_almuerzo=df['Precio almuerzo'].loc[df['R_Factura'] == regimen[0]].mean()
-    precio_cena= df['Precio cena'].loc[df['R_Factura'] == regimen[0]].mean()
+    precio_alojamiento = int(df['Precio alojamiento'].loc[df['Tip.Hab.Fra.'] == room_type].mean()/df['Noches'].loc[df['Tip.Hab.Fra.'] == room_type].mean())*noches
+    precio_desayuno=df['Precio desayuno'].loc[df['Régimen factura'] == regimen[0]].mean()
+    precio_almuerzo=df['Precio almuerzo'].loc[df['Régimen factura'] == regimen[0]].mean()
+    precio_cena= df['Precio cena'].loc[df['Régimen factura'] == regimen[0]].mean()
 
 
     obj = {
     'Noches': noches,
-    'Tip_Hab_Fra' : room_type,
-    'R_Factura': regimen,
+    'Tip.Hab.Fra.' : room_type,
+    'Régimen factura': regimen,
     'AD': adultos,
     'NI':child,
     'CU':cunas,
-    'Horario_Venta': get_horario(),
-    'P_Alojamiento': precio_alojamiento,
-    'P_Desayuno': precio_desayuno,
-    'P_Almuerzo': precio_almuerzo,
-    'P_Cena': precio_cena,
-    'Cantidad_Habitaciones': habitaciones(adultos,child,room_type),
-    'Mes_Entrada' : fecha_entrada.strftime('%B'),
-    'Mes_Venta': fecha_venta.strftime('%B'),
+    'Horario venta': get_horario(),
+    'Precio alojamiento': precio_alojamiento,
+    'Precio desayuno': precio_desayuno,
+    'Precio almuerzo': precio_almuerzo,
+    'Precio cena': precio_cena,
+    'Cantidad Habitaciones': habitaciones(adultos,child,room_type),
+    'Mes Entrada' : fecha_entrada.strftime('%B'),
+    'Mes Venta': fecha_venta.strftime('%B'),
     'Antelacion': (fecha_entrada-fecha_venta).days
     }
 
@@ -126,7 +126,7 @@ def new_data_to_model(df, _obj, _use_cols = use_cols):
     _X =  pd.concat([_sample, pd.DataFrame(_obj,index=[0])], ignore_index=True)
 
     #One Hot Encoding de las variables categ�ricas
-    _X = pd.get_dummies(_X, columns=["Tip_Hab_Fra", "Régimen Factura","Horario_Venta", "Mes_Entrada", "Mes_Venta"], drop_first=True)
+    _X = pd.get_dummies(_X, columns=["Tip.Hab.Fra.", "Régimen factura","Horario venta", "Mes Entrada", "Mes Venta"], drop_first=True)
 
     #Aplicamos el escalador robusto
     robust_scaler = RobustScaler()
