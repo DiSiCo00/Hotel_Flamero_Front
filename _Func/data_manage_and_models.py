@@ -1,3 +1,4 @@
+import streamlit as st
 from datetime import datetime, timedelta
 from sklearn.preprocessing import MinMaxScaler, RobustScaler
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
