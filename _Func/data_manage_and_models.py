@@ -114,7 +114,6 @@ def new_Booking(df, room_type, noches, adultos, child, cunas, fecha_entrada, fec
     }
 
 
-
     return obj
 
 
@@ -122,8 +121,9 @@ def new_data_to_model(df, _obj, _use_cols = use_cols):
     #Tomamos nuestra base de entrenamiento para realizar el proceso de normalizaci�n y One Hot Encoding
     _sample = df[_use_cols]
 
-# Agregar la nueva fila al DataFrame
-    _X =  pd.concat([_sample, pd.DataFrame(_obj,index=[0])], ignore_index=True)
+    # Agregar la nueva fila al DataFrame
+    _X =  _sample.append(obj, ignore_index = True)
+            #pd.concat([_sample, pd.DataFrame(_obj,index=[0])], ignore_index=True)
 
     #One Hot Encoding de las variables categ�ricas
     _X = pd.get_dummies(_X, columns=["Tip.Hab.Fra.", "Régimen factura","Horario venta", "Mes Entrada", "Mes Venta"], drop_first=True)
@@ -147,9 +147,9 @@ def predict_prob(X):
 def predict_date_score(X, _obj, fecha_venta):
     model = joblib.load("reg_random_forest.pkl")
 
-    _score = model.predict(X[-1].reshape(1, -1))
+    _score = model.predict(X[-1].reshape(1, -1))[0]
 
-    return _score[0]
+    return _score
 
 #Función cuota no reembolsable
 def func_no_reembolso(cancel_prob, score, _cuota_media=0.10, _cuota_maxima=0.25, _umbral_inferior=0.25, _umbral_superior=0.4, ):
@@ -195,13 +195,12 @@ def func_no_reembolso(cancel_prob, score, _cuota_media=0.10, _cuota_maxima=0.25,
 
 
 def predictions(room_type, noches, adultos, child, cunas, fecha_entrada, fecha_venta, regimen):
-    cancel_data = load_cancel_data()
     reservas = load_booking_data()
+    cancel_data = load_cancel_data()
 
     obj = new_Booking(reservas, room_type, noches, adultos, child, cunas, fecha_entrada, fecha_venta, regimen)
 
     X_booking = new_data_to_model(reservas, obj)
-
     X_cancel = new_data_to_model(cancel_data, obj)
 
     cancel_prob = predict_prob(X_booking)
