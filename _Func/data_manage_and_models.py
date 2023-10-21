@@ -152,7 +152,7 @@ def predict_date_score(X, _obj, fecha_venta):
     return _score
 
 #Función cuota no reembolsable
-def func_no_reembolso(cancel_prob, score, _cuota_media=0.10, _cuota_maxima=0.25, _umbral_inferior=0.25, _umbral_superior=0.4, ):
+def func_no_reembolso(_obj, cancel_prob, score, _cuota_media=0.10, _cuota_maxima=0.25, _umbral_inferior=0.25, _umbral_superior=0.4 ):
         #Condiciones de control
         if 0 <= _cuota_maxima <= 1:
           if 0 <= _cuota_media <= 1:
@@ -164,23 +164,23 @@ def func_no_reembolso(cancel_prob, score, _cuota_media=0.10, _cuota_maxima=0.25,
                   if cancel_prob < _umbral_inferior:
                     if score<0.5:
                       st.write(f"¡¡Aviso de posible cancelación tardía!!")
-                      st.write(f"Riesgo bajo de cancelación.\nEl huésped podrá cancelar sin coste hasta 7 días antes del {_obj['Fecha entrada']}")
+                      st.write(f"Riesgo bajo de cancelación.\nEl huésped podrá cancelar sin coste hasta 7 días antes del {fecha_entrada}")
                     else:
-                      st.write(f"Riesgo bajo de cancelación.\nEl huésped podrá cancelar sin coste hasta 24 horas antes del {_obj['Fecha entrada']}")
+                      st.write(f"Riesgo bajo de cancelación.\nEl huésped podrá cancelar sin coste hasta 24 horas antes del {fecha_entrada}")
                     return 0;
                   elif cancel_prob > _umbral_superior:
                     if score<0.5:
                       st.write(f"¡¡Aviso de posible cancelación tardía!!")
-                      st.write(f"Riesgo alto de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_maxima)*100:.1f}% del Precio total hasta 30 días antes del {_obj['Fecha entrada']}")
+                      st.write(f"Riesgo alto de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_maxima)*100:.1f}% del Precio total hasta 30 días antes del {fecha_entrada}")
                     else:
-                      st.write(f"Riesgo alto de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_maxima)*100:.1f}% del Precio total hasta 7 días antes del {_obj['Fecha entrada']}")
+                      st.write(f"Riesgo alto de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_maxima)*100:.1f}% del Precio total hasta 7 días antes del {fecha_entrada}")
                     return _cuota_maxima
                   else:
                     if score<0.5:
                       st.write(f"¡¡Aviso de posible cancelación tardía!!")
-                      st.write(f"Riesgo moderado de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_media)*100:.1f}% del Precio total hasta 14 días antes del {_obj['Fecha entrada']}")
+                      st.write(f"Riesgo moderado de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_media)*100:.1f}% del Precio total hasta 14 días antes del {fecha_entrada}")
                     else:
-                      st.write(f"Riesgo moderado de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_media)*100:.1f}% del Precio total hasta 48 horas antes del {_obj['Fecha entrada']}")
+                      st.write(f"Riesgo moderado de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_media)*100:.1f}% del Precio total hasta 48 horas antes del {fecha_entrada}")
                     return _cuota_media
                 else:
                   raise ValueError("El valor de ´umbral_superior´  tiene que ser mayor que ´umbral_inferior´.")
@@ -206,7 +206,7 @@ def predictions(room_type, noches, adultos, child, cunas, fecha_entrada, fecha_v
     cancel_prob = predict_prob(X_booking)
     score = predict_date_score(X_cancel, obj, fecha_venta)
 
-    cuota =  func_no_reembolso(cancel_prob, score)
+    cuota =  func_no_reembolso(fecha_entrada, ancel_prob, score)
 
     return obj, cancel_prob, score, cuota
 
