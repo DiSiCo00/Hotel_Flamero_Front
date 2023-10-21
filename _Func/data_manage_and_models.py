@@ -91,9 +91,9 @@ def new_Booking(df, room_type, noches, adultos, child, cunas, fecha_entrada, fec
         return cont
 
     precio_alojamiento = int(df['Precio alojamiento'].loc[df['Tip.Hab.Fra.'] == room_type].mean()/df['Noches'].loc[df['Tip.Hab.Fra.'] == room_type].mean())*noches
-    precio_desayuno=df['Precio desayuno'].loc[df['Régimen factura'] == regimen[0]].mean()
-    precio_almuerzo=df['Precio almuerzo'].loc[df['Régimen factura'] == regimen[0]].mean()
-    precio_cena= df['Precio cena'].loc[df['Régimen factura'] == regimen[0]].mean()
+    precio_desayuno=df['Precio desayuno'].loc[df['Régimen factura'] == regimen].mean()
+    precio_almuerzo=df['Precio almuerzo'].loc[df['Régimen factura'] == regimen].mean()
+    precio_cena= df['Precio cena'].loc[df['Régimen factura'] == regimen].mean()
 
 
     obj = {
