@@ -231,25 +231,28 @@ def func_no_reembolso(fecha_entrada, cancel_prob, score, _cuota_media=0.10, _cuo
 
                   #Según los distintos umbrales y dependiendo del score, las cancelaciones tendrán unas cuotas y fechas de cancelación 
                   if cancel_prob < _umbral_inferior:
+                    st.write(f"Riesgo bajo de cancelación.")
                     if score<0.5:
                       st.write(f"¡¡Aviso de posible cancelación tardía!!")
-                      st.write(f"Riesgo bajo de cancelación.\nEl huésped podrá cancelar sin coste hasta 7 días antes del {fecha_entrada}")
+                      st.write(f"Fecha límite de cancelación: <\h3> 7 días antes del {fecha_entrada}")
                     else:
-                      st.write(f"Riesgo bajo de cancelación.\nEl huésped podrá cancelar sin coste hasta 24 horas antes del {fecha_entrada}")
+                      st.write(f"Fecha límite de cancelación: <\h3> 24 horas antes del {fecha_entrada}")
                     return 0;
                   elif cancel_prob > _umbral_superior:
+                    st.write(f"Riesgo alto de cancelación.")
                     if score<0.5:
                       st.write(f"¡¡Aviso de posible cancelación tardía!!")
-                      st.write(f"Riesgo alto de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_maxima)*100:.1f}% del Precio total hasta 30 días antes del {fecha_entrada}")
+                      st.write(f"Fecha límite de cancelación: <\h3> 30 días antes del {fecha_entrada}")
                     else:
-                      st.write(f"Riesgo alto de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_maxima)*100:.1f}% del Precio total hasta 7 días antes del {fecha_entrada}")
+                      st.write(f"Fecha límite de cancelación: <\h3> 7 días antes del {fecha_entrada}")
                     return _cuota_maxima
                   else:
+                    st.write(f"Riesgo moderado de cancelación.")
                     if score<0.5:
                       st.write(f"¡¡Aviso de posible cancelación tardía!!")
-                      st.write(f"Riesgo moderado de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_media)*100:.1f}% del Precio total hasta 14 días antes del {fecha_entrada}")
+                      st.write(f"Fecha límite de cancelación: <\h3> 14 días antes del {fecha_entrada}")
                     else:
-                      st.write(f"Riesgo moderado de cancelación.\nEl huésped podrá cancelar perdiendo un {(_cuota_media)*100:.1f}% del Precio total hasta 48 horas antes del {fecha_entrada}")
+                      st.write(f"Fecha límite de cancelación: <\h3> 48 horas antes del {fecha_entrada}")
                     return _cuota_media
                 else:
                   raise ValueError("El valor de ´umbral_superior´  tiene que ser mayor que ´umbral_inferior´.")
