@@ -108,8 +108,8 @@ def new_Booking(df, room_type, noches, adultos, child, cunas, fecha_entrada, fec
         #Asignamos las habitaciones individuales
         cont = adultos
 
-       #Si es un APARTAMENTO PREMIUM, la capacidad máxima es de 4 adultos y 3 niños
-       if tipo_habitacion == 'A':
+      #Si es un APARTAMENTO PREMIUM, la capacidad máxima es de 4 adultos y 3 niños
+      if tipo_habitacion == 'A':
         #Si hay más de 3 niños por adulto devolvemos error (0)
         if adultos * 3 < niños:
           return 0
