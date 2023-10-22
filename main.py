@@ -85,11 +85,6 @@ if page_selected == "Reserva":
                 max_value=pd.to_datetime('30/9/2024',dayfirst=True),
                 on_change=None, format="DD/MM/YYYY"), dayfirst=True)
         
-        fecha_venta = pd.to_datetime(c_body.date_input(label = "Qué día es hoy? (Funcionalidad disponible solo para tests para cambiar el día de la reserva):",
-
-                max_value=entry_date,
-                on_change=None, format="DD/MM/YYYY"), dayfirst=True)
-        
         col_1, col_2, col_3, col_4, col_5 = c_body.columns(5)
 
         noches = int(col_1.number_input('Seleccione la cantidad de noches:',min_value=1))
