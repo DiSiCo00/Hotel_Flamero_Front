@@ -18,7 +18,7 @@ from _Func.html_func import comment_section
 
 from _Func.data_manage_and_models import update_comments_data
 
-from _Func.data_manage_and_models import stentiment_analizis
+from _Func.data_manage_and_models import sentiment_analysis
 from _Func.data_manage_and_models import predictions
 from _Func.data_manage_and_models import get_chat_response
 from _Func.data_manage_and_models import chatbot_env
