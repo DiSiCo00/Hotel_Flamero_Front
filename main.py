@@ -141,9 +141,11 @@ if page_selected == "Reserva":
                 info_col.divider()
                 info_col.markdown(f"<h3>Número de habitaciones:</h3> {obj['Cantidad Habitaciones']}", unsafe_allow_html=True)
                 info_col.markdown(f"<h3>Precio por habitación:</h3> €{round(obj['Precio alojamiento'], 2)}", unsafe_allow_html=True)
+                info_col.markdown(f"<h3>Tarifa no reembolsable:</h3> {round(cuota*100, 2)}%", unsafe_allow_html=True)
+                info_col.markdown(f"<h3>Cuota no reembolsable:</h3> €{round(cuota*obj['Precio alojamiento'], 2)}", unsafe_allow_html=True)
                 if obj['Cantidad Habitaciones'] !=0:
-                    info_col.markdown(f"<h3>Probabilidad de Cancelación:</h3> {round(cancel_prob*100, 2)}%", unsafe_allow_html=True)
-                    info_col.markdown(f"<h3>Cancel_Score:</h3> {round(score, 2)}", unsafe_allow_html=True)
+                    info_col.markdown(f"<h3>(Visible para tests)Probabilidad de Cancelación:</h3> {round(cancel_prob*100, 2)}%", unsafe_allow_html=True)
+                    info_col.markdown(f"<h3>(Visible para tests)Cancel_Score:</h3> {round(score, 2)}", unsafe_allow_html=True)
                 else:
                     st.write("Elija otro tipo de habitación que se adecue mejor a sus circunstancias")
 
