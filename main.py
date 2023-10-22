@@ -141,8 +141,11 @@ if page_selected == "Reserva":
                 info_col.divider()
                 info_col.markdown(f"<h3>Número de habitaciones:</h3> {obj['Cantidad Habitaciones']}", unsafe_allow_html=True)
                 info_col.markdown(f"<h3>Precio por habitación:</h3> €{round(obj['Precio alojamiento'], 2)}", unsafe_allow_html=True)
-                info_col.markdown(f"<h3>Probabilidad de Cancelación:</h3> {round(cancel_prob*100, 2)}%", unsafe_allow_html=True)
-                info_col.markdown(f"<h3>Cancel_Score:</h3> {round(score, 2)}", unsafe_allow_html=True)
+                if obj['Cantidad Habitaciones'] !=0:
+                    info_col.markdown(f"<h3>Probabilidad de Cancelación:</h3> {round(cancel_prob*100, 2)}%", unsafe_allow_html=True)
+                    info_col.markdown(f"<h3>Cancel_Score:</h3> {round(score, 2)}", unsafe_allow_html=True)
+                else:
+                    st.write("Elija otro tipo de habitación que se adecue mejor a sus circunstancias")
 
                 # Columna de Desceipcion de la Habitación
                 room_img =  Image.open(f"{room_type_obj[room_type_id_pointer]['img_path']}")
@@ -174,7 +177,7 @@ elif page_selected == "Opiniones":
                 user = st.text_input("Escribe tu nombre o un alias con el que desees dejar tu comentario:",
                                     value = "Anónimo")
                 text_comment = st.text_area(label="Escribe tu comentario aqui:")
-                raiting = int(st.number_input("Califica tu experienia con nosotros entre 1 - 10",
+                rating = int(st.number_input("Califica tu experienia con nosotros entre 1 - 10",
                                         value=10,
                                         placeholder="Type a number...",
                                         max_value=10,
@@ -182,14 +185,14 @@ elif page_selected == "Opiniones":
                 submit_com = st.form_submit_button("Enviar")
     if submit_com and text_comment != "":
 
-        update_comments_data({"Score": raiting,
+        update_comments_data({"Score": rating,
                             "Comentario_Positivo":text_comment,
                             "Usuario":user})
-        if stentiment_analizis(text_comment) >= 0.05:
+        if sentiment_analysis(text_comment) >= 0.05:
             c_main.balloons()
             c_main.success("Gracias por su comentario")
             time.sleep(5)
-        elif stentiment_analizis(text_comment) <= 0.05:
+        elif sentiment_analysis(text_comment) <= 0.05:
             c_main.info("Agradecemos que hayas compartido tus preocupaciones con nosotros. Lamentamos mucho que hayas tenido esta experiencia", icon="ℹ️")
             time.sleep(5)
         else:
