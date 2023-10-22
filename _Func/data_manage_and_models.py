@@ -234,25 +234,25 @@ def func_no_reembolso(fecha_entrada, cancel_prob, score, _cuota_media=0.10, _cuo
                     st.write(f"Riesgo bajo de cancelación.")
                     if score<0.5:
                       st.write(f"¡¡Aviso de posible cancelación tardía!!")
-                      st.write(f"Fecha límite de cancelación: <\h3> 7 días antes del {fecha_entrada}")
+                      st.write(f"Fecha límite de cancelación: 7 días antes del {fecha_entrada}")
                     else:
-                      st.write(f"Fecha límite de cancelación: <\h3> 24 horas antes del {fecha_entrada}")
+                      st.write(f"Fecha límite de cancelación: 24 horas antes del {fecha_entrada}")
                     return 0;
                   elif cancel_prob > _umbral_superior:
                     st.write(f"Riesgo alto de cancelación.")
                     if score<0.5:
                       st.write(f"¡¡Aviso de posible cancelación tardía!!")
-                      st.write(f"Fecha límite de cancelación: <\h3> 30 días antes del {fecha_entrada}")
+                      st.write(f"Fecha límite de cancelación: 30 días antes del {fecha_entrada}")
                     else:
-                      st.write(f"Fecha límite de cancelación: <\h3> 7 días antes del {fecha_entrada}")
+                      st.write(f"Fecha límite de cancelación: 7 días antes del {fecha_entrada}")
                     return _cuota_maxima
                   else:
                     st.write(f"Riesgo moderado de cancelación.")
                     if score<0.5:
                       st.write(f"¡¡Aviso de posible cancelación tardía!!")
-                      st.write(f"Fecha límite de cancelación: <\h3> 14 días antes del {fecha_entrada}")
+                      st.write(f"Fecha límite de cancelación: 14 días antes del {fecha_entrada}")
                     else:
-                      st.write(f"Fecha límite de cancelación: <\h3> 48 horas antes del {fecha_entrada}")
+                      st.write(f"Fecha límite de cancelación: 48 horas antes del {fecha_entrada}")
                     return _cuota_media
                 else:
                   raise ValueError("El valor de ´umbral_superior´  tiene que ser mayor que ´umbral_inferior´.")
