@@ -53,110 +53,110 @@ def new_Booking(df, room_type, noches, adultos, child, cunas, fecha_entrada, fec
         else:
             return 'Noche'
     
-#Función para definir la cantidad mínima de habitaciones a reservar en base a huespedes y tipo de habitación
-def habitaciones(adultos, niños, tipo_habitacion):
-  cont = 1
+    #Función para definir la cantidad mínima de habitaciones a reservar en base a huespedes y tipo de habitación
+    def habitaciones(adultos, niños, tipo_habitacion):
+      cont = 1
 
-  #Si es una SUITE, la capacidad máxima es de 2 adultos y 2 niños o 3 adultos
-  if tipo_habitacion == 'SUITE':
-    #Si hay más de 2 niños por adulto devolvemos error (0)
-    if adultos * 2 < niños:
-      return 0
+      #Si es una SUITE, la capacidad máxima es de 2 adultos y 2 niños o 3 adultos
+      if tipo_habitacion == 'SUITE':
+        #Si hay más de 2 niños por adulto devolvemos error (0)
+        if adultos * 2 < niños:
+          return 0
 
-    #Asignamos los niños de 2 en 2 y dos adultos por habitación
-    cont = niños // 2 + niños % 2
-    adultos -= cont * 2
+        #Asignamos los niños de 2 en 2 y dos adultos por habitación
+        cont = niños // 2 + niños % 2
+        adultos -= cont * 2
 
-    #Asignamos habitaciones de 3 adultos
-    if  adultos > 0:
-      cont += adultos // 3
-      adultos = adultos % 3
+        #Asignamos habitaciones de 3 adultos
+        if  adultos > 0:
+          cont += adultos // 3
+          adultos = adultos % 3
+   
+          #Última habitación si sobran adultos
+          if adultos > 0:
+            cont += 1
 
-      #Última habitación si sobran adultos
-      if adultos > 0:
-        cont += 1
+      #Si es una habitación DELUXE VISTA COTO, la capacidad máxima es de 2 adultos y 1 niño
+      if tipo_habitacion == 'DVC':
+        #Si hay más niños que adultos devolvemos error (0)
+        if adultos < niños:
+          return 0
 
-  #Si es una habitación DELUXE VISTA COTO, la capacidad máxima es de 2 adultos y 1 niño
-  if tipo_habitacion == 'DVC':
-    #Si hay más niños que adultos devolvemos error (0)
-    if adultos < niños:
-      return 0
+        #Asignamos una habitación por niño y 2 adultos por habitación
+        cont = niños
+        adultos -= cont * 2
 
-    #Asignamos una habitación por niño y 2 adultos por habitación
-    cont = niños
-    adultos -= cont * 2
+        #Asignamos habitaciones de 2 adultos
+        if  adultos > 0:
+          cont += adultos // 2 + adultos % 2
 
-    #Asignamos habitaciones de 2 adultos
-    if  adultos > 0:
-      cont += adultos // 2 + adultos % 2
+      #Si es una habitación DELUXE VISTA MAR, la capacidad máxima es de 2 adultos. No se permiten niños
+      if tipo_habitacion == 'DVM':
+        #Si hay niños por adulto devolvemos error (0)
+        if niños > 0:
+          return 0
 
-  #Si es una habitación DELUXE VISTA MAR, la capacidad máxima es de 2 adultos. No se permiten niños
-  if tipo_habitacion == 'DVM':
-    #Si hay niños por adulto devolvemos error (0)
-    if niños > 0:
-      return 0
+        #Asignamos habitaciones de 2 adultos
+        cont = adultos // 2 + adultos % 2
 
-    #Asignamos habitaciones de 2 adultos
-    cont = adultos // 2 + adultos % 2
+      #Si es una habitación INDIVIDUAL, la capacidad máxima es de 1 adulto. No se permiten niños
+      if tipo_habitacion == 'IND':
+        #Si hay niños por adulto devolvemos error (0)
+        if niños > 0:
+          return 0
 
-  #Si es una habitación INDIVIDUAL, la capacidad máxima es de 1 adulto. No se permiten niños
-  if tipo_habitacion == 'IND':
-    #Si hay niños por adulto devolvemos error (0)
-    if niños > 0:
-      return 0
+        #Asignamos las habitaciones individuales
+        cont = adultos
 
-    #Asignamos las habitaciones individuales
-    cont = adultos
+       #Si es un APARTAMENTO PREMIUM, la capacidad máxima es de 4 adultos y 3 niños
+       if tipo_habitacion == 'A':
+        #Si hay más de 3 niños por adulto devolvemos error (0)
+        if adultos * 3 < niños:
+          return 0
 
-  #Si es un APARTAMENTO PREMIUM, la capacidad máxima es de 4 adultos y 3 niños
-  if tipo_habitacion == 'A':
-    #Si hay más de 3 niños por adulto devolvemos error (0)
-    if adultos * 3 < niños:
-      return 0
+        #Asignamos los niños de 3 en 3 y cuatro adultos por habitación
+        cont = niños // 3
+        niños = niños % 3
+        adultos -= cont * 4
 
-    #Asignamos los niños de 3 en 3 y cuatro adultos por habitación
-    cont = niños // 3
-    niños = niños % 3
-    adultos -= cont * 4
+        #Si sobran niños asignamos otra habitación con capacidad para 4 adultos más
+        if niños > 0:
+          cont += 1
+          adultos -= 4
 
-    #Si sobran niños asignamos otra habitación con capacidad para 4 adultos más
-    if niños > 0:
-      cont += 1
-      adultos -= 4
+        #Si sobran adultos asignamos habitaciones de 4 adultos
+        if adultos > 0:
+          cont += adultos // 4
+          adultos = adultos % 4
 
-    #Si sobran adultos asignamos habitaciones de 4 adultos
-    if adultos > 0:
-      cont += adultos // 4
-      adultos = adultos % 4
+          #Última habitación si sobran adultos
+          if adultos > 0:
+            cont += 1
 
-      #Última habitación si sobran adultos
-      if adultos > 0:
-        cont += 1
+      #Si es un ESTUDIO estándar o una habitación DOBLE SUPERIOR, independientemente de si es vista COTO o MAR,
+      #la capacidad máxima es de 3 adultos y 1 niño o 2 adultos y 2 niños
+      if tipo_habitacion in ('EC', 'EM', 'DSC', 'DSM'):
+        #Si hay más de 2 niños por adulto devolvemos error (0)
+        if adultos * 2 < niños:
+          return 0
 
-  #Si es un ESTUDIO estándar o una habitación DOBLE SUPERIOR, independientemente de si es vista COTO o MAR,
-  #la capacidad máxima es de 3 adultos y 1 niño o 2 adultos y 2 niños
-  if tipo_habitacion in ('EC', 'EM', 'DSC', 'DSM'):
-    #Si hay más de 2 niños por adulto devolvemos error (0)
-    if adultos * 2 < niños:
-      return 0
+        #Asignamos los niños de 2 en 2 y dos adultos por habitación
+        cont = niños // 2
+        adultos -= cont * 2
 
-    #Asignamos los niños de 2 en 2 y dos adultos por habitación
-    cont = niños // 2
-    adultos -= cont * 2
+        #Asignamos habitaciones de 3 en 3
+        if adultos > 0:
+          cont += adultos // 3
+          adultos = adultos % 3
 
-    #Asignamos habitaciones de 3 en 3
-    if adultos > 0:
-      cont += adultos // 3
-      adultos = adultos % 3
+          #Última habitación si sobran adultos
+          if adultos > 0:
+            cont += 1
+        #Si no sobran adultos pero sí un niño, asignaremos una habitación extra
+        elif niños % 2 == 1:
+          cont += 1
 
-      #Última habitación si sobran adultos
-      if adultos > 0:
-        cont += 1
-    #Si no sobran adultos pero sí un niño, asignaremos una habitación extra
-    elif niños % 2 == 1:
-      cont += 1
-
-  return cont
+      return cont
 
 
     precio_alojamiento = df['Precio alojamiento'].loc[df['Tip.Hab.Fra.'] == room_type].mean()/df['Noches'].loc[df['Tip.Hab.Fra.'] == room_type].mean()*noches
