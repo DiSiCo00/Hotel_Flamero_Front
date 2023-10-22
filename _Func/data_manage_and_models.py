@@ -53,10 +53,9 @@ def new_Booking(df, room_type, noches, adultos, child, cunas, fecha_entrada, fec
         else:
             return 'Noche'
     
-
-    #Función para definir la cantidad mínima de habitaciones a reservar en base a huespedes y tipo de habitación
+#Función para definir la cantidad mínima de habitaciones a reservar en base a huespedes y tipo de habitación
 def habitaciones(adultos, niños, tipo_habitacion):
- cont = 1
+  cont = 1
 
   #Si es una SUITE, la capacidad máxima es de 2 adultos y 2 niños o 3 adultos
   if tipo_habitacion == 'SUITE':
@@ -156,7 +155,9 @@ def habitaciones(adultos, niños, tipo_habitacion):
     #Si no sobran adultos pero sí un niño, asignaremos una habitación extra
     elif niños % 2 == 1:
       cont += 1
+
   return cont
+
 
     precio_alojamiento = df['Precio alojamiento'].loc[df['Tip.Hab.Fra.'] == room_type].mean()/df['Noches'].loc[df['Tip.Hab.Fra.'] == room_type].mean()*noches
     precio_desayuno=df['Precio desayuno'].loc[df['Régimen factura'] == regimen].mean()
