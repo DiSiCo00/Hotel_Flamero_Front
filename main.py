@@ -140,7 +140,7 @@ if page_selected == "Reserva":
                 info_col.markdown(f"<h2>{room_type_id_pointer}:</h2>", unsafe_allow_html=True)
                 info_col.divider()
                 info_col.markdown(f"<h3>Número de habitaciones:</h3> {obj['Cantidad Habitaciones']}", unsafe_allow_html=True)
-                info_col.markdown(f"<h3>Precio de la estancia:</h3> €{round(obj['Precio alojamiento'], 2)}", unsafe_allow_html=True)
+                info_col.markdown(f"<h3>Precio por habitación:</h3> €{round(obj['Precio alojamiento'], 2)}", unsafe_allow_html=True)
                 info_col.markdown(f"<h3>Probabilidad de Cancelación:</h3> {round(cancel_prob*100, 2)}%", unsafe_allow_html=True)
                 info_col.markdown(f"<h3>Cancel_Score:</h3> {round(score, 2)}", unsafe_allow_html=True)
 
