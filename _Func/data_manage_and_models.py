@@ -279,7 +279,7 @@ def predictions(room_type, noches, adultos, child, cunas, fecha_entrada, fecha_v
 
     return obj, cancel_prob, score, cuota
 
-def stentiment_analizis(_text):
+def sentiment_analysis(_text):
 
     nltk.download('vader_lexicon')
     nltk.download('punkt')
@@ -289,8 +289,8 @@ def stentiment_analizis(_text):
     translator = Translator(from_lang="es", to_lang="en")
     text = translator.translate(_text)
 
-    palabras_positivas = ["good","happy","big","recommend","nice"]
-    palabras_negativas = ["old","small","uncomfortable","bad","slow"]
+    palabras_positivas = ["good","happy","big","recommend","nice","great", "excellent", "enjoy", "enjoyed", "perfect", "elegant", "gently", "gentle", "delicious", "unforgettable", "spectacular", "highly","detail"]
+    palabras_negativas = ["old","poor","small","uncomfortable","bad","slow", "shit", "suffered", "horrible", "disaster","no","noisy","expensive"]
 
 
     def calcular_puntuacion_sentimiento(frase_ingles):
