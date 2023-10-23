@@ -60,7 +60,7 @@ c_body = c_main.container()
 with st.sidebar:
     page_selected = option_menu(
     menu_title="Menu",
-    options=["Reserva", "Opiniones", "ChatBot"],
+    options=["Reserva", "ChatBot", "Opiniones"],
     default_index=0,
     )
 
