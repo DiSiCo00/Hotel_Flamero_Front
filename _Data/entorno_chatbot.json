@@ -5,6 +5,6 @@
     "Search_Key": "l5qRxZ1xjjo7G4O15ynm4IwOjBAQk21PDi1vN2pi1yAzSeDw5cnu",
     "search_index_name": "flamero-chatbot",
     "search_endpoint": "https://flamerochatbot.search.windows.net",
-    "api_version": "2023-07-01-preview",
+    "api_version": "2023-08-01-preview",
     "api_type": "azure"
 }
