@@ -237,7 +237,7 @@ elif page_selected == "ChatBot":
                 with st.chat_message("assistant"):
                     message_placeholder = st.empty()
                     full_response = ""
-                    respuesta = Translator(to_lang="es").translate(get_chat_response(prompt))
+                    respuesta = get_chat_response(prompt)#Translator(to_lang="es").translate(get_chat_response(prompt))
 
                     for chunk in respuesta.split():
                         full_response += chunk + " "
