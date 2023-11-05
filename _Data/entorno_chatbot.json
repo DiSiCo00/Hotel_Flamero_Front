@@ -1,10 +1,10 @@
 {
-    "api_key": "ff4e5db40bb04cdca3e4d62afa342369",
+    "api_key": "5f459bad773f4ddaa47f774ebccc29c9",
     "api_base": "https://chatbotflamero.openai.azure.com/",
-    "deployment_id": "chatflamero",
-    "Search_Key": "4BCsu5yM5VNcjZaGSSB51GEWXAjLvwrUy3d0fS0J2RAzSeBUkCIh",
-    "search_index_name": "flameroindex",
-    "search_endpoint": "https://chatbotflamero.search.windows.net",
+    "deployment_id": "chatbotflamero",
+    "Search_Key": "l5qRxZ1xjjo7G4O15ynm4IwOjBAQk21PDi1vN2pi1yAzSeDw5cnu",
+    "search_index_name": "flamero-chatbot",
+    "search_endpoint": "https://flamerochatbot.search.windows.net",
     "api_version": "2023-08-01-preview",
     "api_type": "azure"
 }
