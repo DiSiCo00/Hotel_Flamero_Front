@@ -381,12 +381,6 @@ def get_chat_response(message, env=env, setup=setup):
 
     completion = openai.ChatCompletion.create(
         messages=[setup],
-        temperature=0.3,
-        max_tokens=1500,
-        top_p=0.95,
-        frequency_penalty=0,
-        presence_penalty=0,
-        stop=None,
         deployment_id=deployment_id,
         dataSources=[  # camelCase is intentional, as this is the format the API expects
             {
